@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  glpi:
+    image: elestio/glpi:10.0.11
+    volumes:
+      - ./glpi:/var/www/html/glpi
+      - ./config:/var/www/html/config
+      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
+    ports:
+      - 7000:80
+    depends_on:
+      - mariadb
+    command: bash -c "apache2-foreground & sleep 5 && rm -f /var/www/html/glpi/INSTALL.md"
+
+  mariadb:
+    image: mariadb:10.5
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Glpiparis@92*
+      MYSQL_DATABASE: glpi
+      MYSQL_USER: glpi
+      MYSQL_PASSWORD: Glpiparis@92*
